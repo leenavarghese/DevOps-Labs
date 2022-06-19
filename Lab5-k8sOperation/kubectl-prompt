@@ -1,0 +1,5 @@
+#!/bin/bash
+currentContext=$(kubectl config current-context)
+prompt="(%s @ %s) > "
+template="{{ range .contexts }}{{ if eq .name \"$currentContext\" }}{{ printf \"$prompt\" .context.user .context.cluster}}{{ end }}{{ end }}"
+kubectl config view --template="$template"

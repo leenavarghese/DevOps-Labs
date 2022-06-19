@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www
+  labels:
+    app: www
+spec:
+  initContainers:
+  - name: download
+    image: mkiadi2002/git-client
+    command:
+    - git
+    - clone
+    - https://github.com/mdn/beginner-html-site-scripted
+    - /var/lib/data
+    volumeMounts:
+    - mountPath: /var/lib/data
+      name: source
+  containers:
+  - name: run
+    image: docker.io/centos/httpd
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /var/www/html
+      name: source
+  volumes:
+  - emptyDir: {}
+    name: source

@@ -1,0 +1,33 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+spec:
+  containers:
+  - name: app
+    image: docker.io/centos/httpd
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /var/www/html
+      name: git
+    imagePullPolicy: Always
+  - name: poll
+    imagePullPolicy: Always
+    image: mkiadi2002/git-client
+    volumeMounts:
+    - mountPath: /var/lib/data
+      name: git
+    env:
+    - name: GIT_REPO
+      value: https://github.com/mortezakiadi/sidecar
+    command:
+    - "sh"
+    - "-c"
+    - "git clone $(GIT_REPO) . && watch -n 10 git pull"
+    workingDir: /var/lib/data
+  volumes:
+  - emptyDir: {}
+    name: git
+

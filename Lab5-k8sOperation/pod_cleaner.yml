@@ -1,0 +1,8 @@
+apiVersion: "controllers.humber.ca/v1"
+kind: PodCleaner
+metadata:
+  name: pod-lifecycle
+spec:
+  NamespaceName: crddemo
+  podLiveForThisMinutes: 1
+

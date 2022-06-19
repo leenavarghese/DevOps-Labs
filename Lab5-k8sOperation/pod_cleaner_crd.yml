@@ -1,0 +1,29 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  # name must match the spec fields below, and be in the form: <plural>.<group>
+  name: podcleaners.controllers.humber.ca
+spec:
+  group: controllers.humber.ca
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                podLiveForThisMinutes:
+                  type: integer
+                NamespaceName:
+                  type: string
+  scope: Namespaced
+  names:
+    kind: PodCleaner
+    plural: podcleaners
+    singular: podcleaner
+    shortNames:
+    - pc

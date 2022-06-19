@@ -1,0 +1,20 @@
+apiVersion:  v1
+kind:  Pod
+metadata:  
+  name:  liveness-probe-never-restart
+spec:
+  restartPolicy:  Never
+  containers:
+    -  name:  ubuntu-container
+       image:  ubuntu
+       command:
+         -  /bin/bash
+         -  -ec
+         -  touch /tmp/ready;  sleep 30; rm -rf /tmp/ready.txt;  sleep 20
+       livenessProbe:
+         exec:
+           command:
+             -  cat
+             -  /tmp/ready.txt
+         initialDelaySeconds:  5
+         periodSeconds:  5
